@@ -10,6 +10,8 @@ route.get(
 // after client grants permission
 // with code that google sent
 // passportjs automaticly makes for us this situation.
-route.get('/google/callback', passport.authenticate('google'));
+route.get('/google/callback', passport.authenticate('google'), (req, res) => {
+  res.redirect('/surveys');
+});
 
 module.exports = route;
