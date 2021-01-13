@@ -1,5 +1,3 @@
-// import { FETCH_USER } from '../actions/types';
-
 import { FETCH_USER } from '../actions/types';
 
 const authReducer = (state = null, action) => {
