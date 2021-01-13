@@ -16,7 +16,7 @@ class Header extends Component {
         );
       default:
         return [
-          <li key='1'>
+          <li key='1' style={{ marginRight: '4px' }}>
             <Payments />
           </li>,
           <li key='2'>
