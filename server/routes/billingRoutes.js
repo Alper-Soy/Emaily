@@ -11,7 +11,10 @@ route.post('/stripe', async (req, res) => {
     description: '$5 for 5 credits',
   });
 
-  console.log(charge);
+  req.user.credits += 5;
+  const user = await req.user.save();
+
+  res.json(user)
 });
 
 module.exports = route;
