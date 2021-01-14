@@ -19,6 +19,7 @@ mongoose
 const authRoutes = require('./routes/authRoutes');
 const logoutRoute = require('./routes/logoutRoute');
 const billingRoutes = require('./routes/billingRoutes');
+const surveyRoutes = require('./routes/surveyRoutes');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(passport.session());
 app.use('/auth', authRoutes);
 app.use('/api', logoutRoute);
 app.use('/api', billingRoutes);
+app.use('/api', surveyRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   // Express will serve up production assets
