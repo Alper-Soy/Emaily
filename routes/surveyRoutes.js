@@ -6,9 +6,13 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
 
-const route = express.Router();
+const router = express.Router();
 
-route.post('/surveys', requireLogin, requireCredits, (req, res) => {
+router.get('/surveys/thanks', (req, res) => {
+  res.send('Thanks for voting!');
+});
+
+router.post('/surveys', requireLogin, requireCredits, async (req, res) => {
   const { title, body, subject, recipients } = req.body;
 
   const survey = new Survey({
@@ -21,7 +25,17 @@ route.post('/surveys', requireLogin, requireCredits, (req, res) => {
   });
 
   const mailer = new Mailer(survey, surveyTemplate(survey));
-  mailer.send();
+
+  try {
+    await mailer.send();
+    await survey.save();
+    req.user.credits -= 1;
+    const user = await req.user.save();
+
+    res.send(user);
+  } catch (err) {
+    res.status(422).send(err);
+  }
 });
 
-module.exports = route;
+module.exports = router;

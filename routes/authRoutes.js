@@ -1,17 +1,17 @@
 const express = require('express');
 const passport = require('passport');
 
-const route = express.Router();
+const router = express.Router();
 
-route.get(
+router.get(
   '/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 // after client grants permission
 // with code that google sent
 // passportjs automaticly makes for us this situation.
-route.get('/google/callback', passport.authenticate('google'), (req, res) => {
+router.get('/google/callback', passport.authenticate('google'), (req, res) => {
   res.redirect('/surveys');
 });
 
-module.exports = route;
+module.exports = router;

@@ -1,12 +1,12 @@
 const express = require('express');
-const route = express.Router();
+const router = express.Router();
 
-route.get('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   req.logOut();
   res.redirect('/');
 });
-route.get('/current_user', (req, res) => {
+router.get('/current_user', (req, res) => {
   res.send(req.user);
 });
 
-module.exports = route;
+module.exports = router;
