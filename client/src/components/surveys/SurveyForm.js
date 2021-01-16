@@ -42,13 +42,14 @@ class SurveyForm extends Component {
 function validate(values) {
   const errors = {};
 
+  errors.recipients = validEmails(values.recipients || '');
+
   _.each(formFields, ({ name }) => {
     if (!values[name]) {
       errors[name] = 'You must provide a value';
     }
   });
 
-  errors.emails = validEmails(values.emails || '');
   return errors;
 }
 export default reduxForm({
