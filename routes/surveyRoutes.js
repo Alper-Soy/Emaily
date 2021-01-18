@@ -2,6 +2,9 @@ const express = require('express');
 const Survey = require('../models/survey');
 const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
+const _ = require('lodash');
+const { Path } = require('path-parser');
+const { URL } = require('url');
 
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
@@ -13,8 +16,19 @@ router.get('/surveys/thanks', (req, res) => {
 });
 
 router.post('/surveys/webhooks', (req, res) => {
-  console.log(req.body);
-  res.send({});
+  const events = _.map(req.body, ({ email, url }) => {
+    const pathname = new URL(url).pathname;
+    const p = new Path('/api/surveys/:surveyId/:choice');
+    const match = p.test(pathname);
+    if (match) {
+      return {
+        email,
+        surveyId: match.surveyId,
+        choice: match.choice,
+      };
+    }
+  });
+  console.log(events);
 });
 
 router.post('/surveys', requireLogin, requireCredits, async (req, res) => {
