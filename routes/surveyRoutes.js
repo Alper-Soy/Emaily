@@ -12,6 +12,11 @@ router.get('/surveys/thanks', (req, res) => {
   res.send('Thanks for voting!');
 });
 
+router.post('/surveys/webhooks', (req, res) => {
+  console.log(req.body);
+  res.send({});
+});
+
 router.post('/surveys', requireLogin, requireCredits, async (req, res) => {
   const { title, body, subject, recipients } = req.body;
 
