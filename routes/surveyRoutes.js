@@ -11,6 +11,14 @@ const requireCredits = require('../middlewares/requireCredits');
 
 const router = express.Router();
 
+router.get('/surveys', requireLogin, async (req, res) => {
+  const surveys = await Survey.find({ _user: req.user.id }).select({
+    recipients: false,
+  });
+
+  res.send(surveys);
+});
+
 router.get('/surveys/:surveyId/:choice', (req, res) => {
   res.send('Thanks for voting!');
 });
