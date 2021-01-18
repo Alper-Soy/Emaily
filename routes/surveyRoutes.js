@@ -11,7 +11,7 @@ const requireCredits = require('../middlewares/requireCredits');
 
 const router = express.Router();
 
-router.get('/surveys/thanks', (req, res) => {
+router.get('/surveys/:surveyId/:choice', (req, res) => {
   res.send('Thanks for voting!');
 });
 
